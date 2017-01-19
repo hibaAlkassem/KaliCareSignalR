@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <head>
+        <title></title>
+        <script src="Scripts/jquery-1.10.2.js"></script>
+        <script src="Scripts/jquery.signalR-2.1.2.min.js"></script>
+        <script src="http://localhost:57844/signalr/hubs" type="text/javascript"></script>
+      
+    </head>
+<body>
+  
+
+    <input type="button" id="btnSend" value="test SignalR"/><br />
+    lastId <input type="text" id="lastIdText" /><br />
+   <input type="button" id="btnInsight" value="get new insight" />
+
+
+    <script type="text/javascript">
+    $(function () {
+        var myChatHub = $.connection.MyHub1;
+        console.log(myChatHub);
+        myChatHub.client.addMessage = function (message) {
+            console.log(message);
+        }
+
+        myChatHub.client.addInsight = function (message) {
+            console.log(message);
+        }
+
+        $.connection.hub.start().done();
+        $("#btnSend").click(function () {
+
+            myChatHub.server.hello("something");
+        });
+       
+        $("#btnInsight").click(function () {
+
+            myChatHub.server.getNewInsights("2000");
+        });
+
+    });
+
+
+    </script>
+</body>
+</html>
